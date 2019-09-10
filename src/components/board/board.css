@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+
+}
+
+#board {
+    display: flex;
+    width: 300px;
+    border-style: hidden;
+    height: calc(12px + 2vmin);
+    border: 1px
+
+}
+
+.square {
+ width: 100px;
+ height: 100px;
+ border: 1px solid black;
+
+}
