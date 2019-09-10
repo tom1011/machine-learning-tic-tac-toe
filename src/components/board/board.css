@@ -2,22 +2,18 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-
 }
 
-#board {
+.board {
     display: flex;
-    width: 300px;
-    border-style: hidden;
-    height: calc(12px + 2vmin);
-    border: 1px
-
+    width: 600px;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
 .square {
- width: 100px;
- height: 100px;
+ width: 200px;
+ height: 200px;
  border: 1px solid black;
 
 }
