@@ -1,24 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './board.css'
 
-function board() {
+class board extends Component {
 
 
-
-    
-    return (
-        <div className="board">
-            <div className="square"></div>
-            <div className="square"></div>
-            <div className="square"></div>
-            <div className="square"></div>
-            <div className="square"></div>
-            <div className="square"></div>
-            <div className="square"></div>
-            <div className="square"></div>
-            <div className="square"></div>
-        </div>
-    );
+    render() {
+        return (
+            <div>
+            </div>
+        );
+    }
 }
 
 export default board;
