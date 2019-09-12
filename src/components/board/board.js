@@ -18,7 +18,7 @@ class board extends Component {
     }
     clicked(box) {
 
-
+        console.log(box)
         if (this.state.gameState.gameEnded || this.state.gameState.gameLocked) return;
 
         if (this.state.gameState.board[box.dataset.square] === '') {
@@ -44,7 +44,7 @@ class board extends Component {
 
         console.log(this.state.gameState.totalMoves);
 
-        var result = this.props.checkWinner(this.state.gameState.board);
+        var result = this.checkWinner(this.state.gameState.board);
 
         if (result === 'X') {
             this.state.gameState.gameEnded = true;
@@ -81,6 +81,18 @@ class board extends Component {
 
     }
 
+    checkWinner(board) {
+        var moves = [[0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6], [0, 1, 2], [3, 4, 5], [6, 7, 8]];
+        for (let i = 0; i < moves.length; i++) {
+          if (board[moves[i][0]] === board[moves[i][1]] && board[moves[i][1]] === board[moves[i][2]])
+            return board[moves[i][0]];
+        }
+        if (this.state.gameState.totalMoves === 9) {
+          return 'draw';
+        }
+      }
+
+
     gameReset() {
 
         this.setState({
@@ -97,7 +109,7 @@ class board extends Component {
             totalMoves: 0
         })
 
-        console.log(this.state.gameState)
+        this.props.reset()
 
     }
 
