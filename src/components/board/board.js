@@ -6,23 +6,25 @@ class board extends Component {
         super();
         this.state = {
             winner: undefined,
+            gameState: {
+                turn: 'X',
+                gameLocked: false,
+                gameEnded: false,
+                board: Array(9).fill(''),
+                totalMoves: 0
+            }
         };
-        this.state.gameState = {
-            turn: 'X',
-            gameLocked: false,
-            gameEnded: false,
-            board: Array(9).fill(''),
-            totalMoves: 0
-        }
-        
+
     }
     clicked(box) {
-
         console.log(box)
         if (this.state.gameState.gameEnded || this.state.gameState.gameLocked) return;
 
         if (this.state.gameState.board[box.dataset.square] === '') {
+
+
             this.state.gameState.board[box.dataset.square] = this.state.gameState.turn;
+
             box.innerText = this.state.gameState.turn;
 
             if (this.state.gameState.turn === 'X') {
@@ -67,6 +69,7 @@ class board extends Component {
             })
         }
 
+        // random AI
         if (this.state.gameState.turn === 'O' && !this.state.gameState.gameEnded) {
             this.state.gameState.gameLocked = true;
             setTimeout(() => {
@@ -84,33 +87,31 @@ class board extends Component {
     checkWinner(board) {
         var moves = [[0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6], [0, 1, 2], [3, 4, 5], [6, 7, 8]];
         for (let i = 0; i < moves.length; i++) {
-          if (board[moves[i][0]] === board[moves[i][1]] && board[moves[i][1]] === board[moves[i][2]])
-            return board[moves[i][0]];
+            if (board[moves[i][0]] === board[moves[i][1]] && board[moves[i][1]] === board[moves[i][2]])
+                return board[moves[i][0]];
         }
         if (this.state.gameState.totalMoves === 9) {
-          return 'draw';
+            return 'draw';
         }
-      }
+    }
 
 
     gameReset() {
 
         this.setState({
             winner: undefined,
-            winnerLine: ''
+            winnerLine: '',
+            gameState: {
+                turn: 'X',
+                gameLocked: false,
+                gameEnded: false,
+                board: Array(9).fill(''),
+                totalMoves: 0
+            }
         })
-
-         this.setState(
-            this.state.gameState = {
-            turn: 'X',
-            gameLocked: false,
-            gameEnded: false,
-            board: Array(9).fill(''),
-            totalMoves: 0
-        })
-
-        this.props.reset()
-
+        for (let i =0;i<this.state.gameState.board.length;i++){
+            this.clicked(document.querySelectorAll('.square')[i])
+        }
     }
 
 
@@ -119,15 +120,15 @@ class board extends Component {
             <div>
                 <div id="status">{this.state.winnerLine}</div>
                 <div id="board" onClick={(e) => this.clicked(e.target)}>
-                    <div className="square" data-square="0"></div>
-                    <div className="square" data-square="1"></div>
-                    <div className="square" data-square="2"></div>
-                    <div className="square" data-square="3"></div>
-                    <div className="square" data-square="4"></div>
-                    <div className="square" data-square="5"></div>
-                    <div className="square" data-square="6"></div>
-                    <div className="square" data-square="7"></div>
-                    <div className="square" data-square="8"></div>
+                    <div className="square" data-square="0">{this.state.gameState.board[0]}</div>
+                    <div className="square" data-square="1">{this.state.gameState.board[1]}</div>
+                    <div className="square" data-square="2">{this.state.gameState.board[2]}</div>
+                    <div className="square" data-square="3">{this.state.gameState.board[3]}</div>
+                    <div className="square" data-square="4">{this.state.gameState.board[4]}</div>
+                    <div className="square" data-square="5">{this.state.gameState.board[5]}</div>
+                    <div className="square" data-square="6">{this.state.gameState.board[6]}</div>
+                    <div className="square" data-square="7">{this.state.gameState.board[7]}</div>
+                    <div className="square" data-square="8">{this.state.gameState.board[8]}</div>
                 </div>
                 <button onClick={this.gameReset.bind(this)}>Reset Game</button>
             </div>
