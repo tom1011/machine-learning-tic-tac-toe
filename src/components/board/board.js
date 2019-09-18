@@ -5,6 +5,7 @@ class board extends Component {
     constructor() {
         super();
         this.state = {
+            selfplay: false,
             winner: undefined,
             gameState: {
                 turn: 'X',
@@ -69,8 +70,19 @@ class board extends Component {
             })
         }
 
-        // random AI
-        if (this.state.gameState.turn === 'O' && !this.state.gameState.gameEnded) {
+        // random AI 
+        if (this.state.gameState.turn === 'O' && this.props.player2 === 'Random AI' && !this.state.gameState.gameEnded) {
+            this.state.gameState.gameLocked = true;
+            setTimeout(() => {
+                do {
+                    var random = Math.floor(Math.random() * 9);
+                } while (this.state.gameState.board[random] !== '');
+                this.state.gameState.gameLocked = false;
+                this.clicked(document.querySelectorAll('.square')[random]);
+            }, 1000);
+
+        }
+        if (this.state.gameState.turn === 'X' && this.props.player1 === 'Random AI' && !this.state.gameState.gameEnded) {
             this.state.gameState.gameLocked = true;
             setTimeout(() => {
                 do {
@@ -113,7 +125,6 @@ class board extends Component {
             this.clicked(document.querySelectorAll('.square')[i])
         }
     }
-
 
     render() {
         return (

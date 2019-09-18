@@ -4,7 +4,20 @@ import Board from '../board/board';
 
 
 class App extends Component {
-
+  constructor() {
+    super();
+    this.state = {
+      player1: 'Human',
+      player2: 'Random AI',
+    };
+  }
+  changePlayer1 = (event) => {
+    this.setState({player1: event.target.value});
+  }
+  changePlayer2 = (event) => {
+    this.setState({player2: event.target.value});
+  }
+  
 
   render() {
     return (
@@ -12,7 +25,23 @@ class App extends Component {
         <div id="head">
           World's best tic tac toe AI
           </div>
-        <Board checkWinner={this.checkWinner}  reset={this.reset} />
+          <div> select player1: 
+          <select player1={this.state.player1} onChange={this.changePlayer1}>
+          <option player1="Human">Human</option>
+          <option player1="Random AI">Random AI</option>
+          <option player1="Learning AI">Learning AI</option>
+        </select>
+          </div>
+          <div> select player2: 
+          <select player2={this.state.player2} onChange={this.changePlayer2}>
+          <option player2="Random AI">Random AI</option>
+          <option player2="Human">Human</option>
+          <option player2="Learning AI">Learning AI</option>
+        </select>
+          </div>
+
+          
+        <Board player1={this.state.player1} player2={this.state.player2} />
       </div>
     );
   }
