@@ -9,6 +9,7 @@ class App extends Component {
     this.state = {
       player1: 'Human',
       player2: 'Random AI',
+      autoPlay: false
     };
   }
   changePlayer1 = (event) => {
@@ -39,9 +40,14 @@ class App extends Component {
           <option player2="Learning AI">Learning AI</option>
         </select>
           </div>
-
+          <div> Autoplay: 
+          <select autoPlay={this.state.autoPlay} onChange={this.changePlayer2}>
+          <option autoPlay={false}>No</option>
+          <option autoPlay={true}>Yes</option>
+        </select>
+          </div>
           
-        <Board player1={this.state.player1} player2={this.state.player2} />
+        <Board player1={this.state.player1} autoPlay={this.state.autoPlay} player2={this.state.player2} />
       </div>
     );
   }
