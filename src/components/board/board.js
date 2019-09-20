@@ -7,6 +7,7 @@ class board extends Component {
         this.state = {
             selfplay: false,
             winner: undefined,
+            autoPlay: false,
             gameState: {
                 turn: 'X',
                 gameLocked: false,
@@ -126,12 +127,30 @@ class board extends Component {
         }
     }
 
+    changeAutoPlayer = () => {
+        this.setState({autoPlay: !this.state.autoPlay})
+        console.log('autoplayer change', this.state)
+      }
+    
+
     render() {
+        let displaytext = ''
+        if (this.state.autoPlay && this.props.player1 === 'Human' || this.props.player2 === 'Human'){
+            displaytext = 'Please chose two AI for Autoplay'
+        }
+
         return (
             <div>
-                <div id="status">{this.state.winnerLine}</div>
-                <div id="board" onClick={(e) => this.clicked(e.target)}>
-                    <div className="square" data-square="0">{this.state.gameState.board[0]}</div>
+                <div> Autoplay: 
+          <select autoPlay={this.state.autoPlay} onChange={this.changeAutoPlayer}>
+          <option>No</option>
+          <option>Yes</option>
+        </select>
+          </div>
+                {displaytext}
+                <div id='status'>{this.state.winnerLine}</div>
+                <div id='board' onClick={(e) => this.clicked(e.target)}>
+                    <div className='square' data-square='0'>{this.state.gameState.board[0]}</div>
                     <div className="square" data-square="1">{this.state.gameState.board[1]}</div>
                     <div className="square" data-square="2">{this.state.gameState.board[2]}</div>
                     <div className="square" data-square="3">{this.state.gameState.board[3]}</div>
