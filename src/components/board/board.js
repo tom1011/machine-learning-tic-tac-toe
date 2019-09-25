@@ -57,18 +57,28 @@ class board extends Component {
                 winner: 'X',
                 winnerLine: 'Match won by X'
             });
+            if (this.state.autoPlay){
+                console.log('in autoplay if statment')
+                this.gameReset()
+            }
         } else if (result === 'O') {
             this.state.gameState.gameEnded = true;
             this.setState({
                 winner: 'O',
                 winnerLine: 'Match won by O'
             });
+            if (this.state.autoPlay){
+                this.gameReset()
+            }
         } else if (result === 'draw') {
             this.state.gameState.gameEnded = true;
             this.setState({
                 winner: 'draw',
                 winnerLine: 'Match is drawn'
             })
+            if (this.state.autoPlay){
+                this.gameReset()
+            }
         }
 
         // random AI 
@@ -110,7 +120,7 @@ class board extends Component {
 
 
     gameReset() {
-
+        setTimeout(() => {
         this.setState({
             winner: undefined,
             winnerLine: '',
@@ -122,31 +132,47 @@ class board extends Component {
                 totalMoves: 0
             }
         })
-        for (let i =0;i<this.state.gameState.board.length;i++){
+        for (let i = 0; i < this.state.gameState.board.length; i++) {
             this.clicked(document.querySelectorAll('.square')[i])
         }
+    }, 500)
     }
 
     changeAutoPlayer = () => {
-        this.setState({autoPlay: !this.state.autoPlay})
+        this.setState({ autoPlay: !this.state.autoPlay })
         console.log('autoplayer change', this.state)
+        this.checkstate()
+    }
+
+    checkstate = () => {
+        console.log('in checkstate function')
+        if (this.state.autoPlay && this.props.player1 !== 'Human' && this.props.player2 !== 'Human'){
+            this.state.gameState.gameLocked = true;
+            setTimeout(() => {
+                do {
+                    var random = Math.floor(Math.random() * 9);
+                } while (this.state.gameState.board[random] !== '');
+                this.state.gameState.gameLocked = false;
+                this.clicked(document.querySelectorAll('.square')[random]);
+            }, 1000);
+        }
       }
-    
+
 
     render() {
         let displaytext = ''
-        if (this.state.autoPlay && this.props.player1 === 'Human' || this.props.player2 === 'Human'){
+        if (this.state.autoPlay && this.props.player1 === 'Human' || this.props.player2 === 'Human') {
             displaytext = 'Please chose two AI for Autoplay'
         }
 
         return (
             <div>
-                <div> Autoplay: 
+                <div> Autoplay:
           <select autoPlay={this.state.autoPlay} onChange={this.changeAutoPlayer}>
-          <option>No</option>
-          <option>Yes</option>
-        </select>
-          </div>
+                        <option>No</option>
+                        <option>Yes</option>
+                    </select>
+                </div>
                 {displaytext}
                 <div id='status'>{this.state.winnerLine}</div>
                 <div id='board' onClick={(e) => this.clicked(e.target)}>
