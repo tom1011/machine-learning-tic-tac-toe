@@ -132,8 +132,9 @@ class board extends Component {
                 totalMoves: 0
             }
         })
-        for (let i = 0; i < this.state.gameState.board.length; i++) {
-            this.clicked(document.querySelectorAll('.square')[i])
+        if (this.state.autoPlay){
+            var random = Math.floor(Math.random() * 9);
+            this.clicked(document.querySelectorAll('.square')[random])
         }
     }, 500)
     }
