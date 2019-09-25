@@ -124,6 +124,7 @@ class board extends Component {
         this.setState({
             winner: undefined,
             winnerLine: '',
+            autoPlay: this.state.autoPlay,
             gameState: {
                 turn: 'X',
                 gameLocked: false,
