@@ -13,18 +13,17 @@ class board extends Component {
                 gameLocked: false,
                 gameEnded: false,
                 board: Array(9).fill(''),
-                totalMoves: 0
+                totalMoves: 0,
+                gamerecord: [],
             }
         };
-
     }
+    
     clicked(box) {
         console.log(box)
         if (this.state.gameState.gameEnded || this.state.gameState.gameLocked) return;
 
         if (this.state.gameState.board[box.dataset.square] === '') {
-
-
             this.state.gameState.board[box.dataset.square] = this.state.gameState.turn;
 
             box.innerText = this.state.gameState.turn;
